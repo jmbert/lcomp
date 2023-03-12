@@ -3,6 +3,7 @@ package lcomp
 import (
 	"errors"
 	"fmt"
+	"log"
 	"strings"
 )
 
@@ -211,6 +212,7 @@ func (t *Token) parse(p *Parser) (string, error) {
 		cmd += "push eax\n"
 		cmd += fmt.Sprintf("mov eax, %s\n", val1)
 		cmd += fmt.Sprintf("add eax, %s\n", val2)
+		log.Fatalf("%s %s\n", val1, val2)
 		cmd += fmt.Sprintf("mov [%s], eax\n", dest)
 		cmd += "pop eax\n"
 
