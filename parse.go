@@ -133,8 +133,8 @@ func (t *Token) parse(p *Parser) (string, error) {
 		}
 
 		cmd += fmt.Sprintf("mov eax, %s\n", arg)
-		cmd += "ret\n"
 		cmd += "pop ebp\n"
+		cmd += "ret\n"
 
 	case "define":
 		arg, err := get_arg(p)
