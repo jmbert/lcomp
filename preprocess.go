@@ -5,7 +5,7 @@ import (
 )
 
 func preprocess(src_name string) error {
-	cp_cmd := exec.Command("cp", src_name, "build/source.txt")
+	cp_cmd := exec.Command("cp", src_name, "/home/joe/lbuild/source.txt")
 
 	err := cp_cmd.Run()
 
