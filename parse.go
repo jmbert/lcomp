@@ -173,7 +173,7 @@ func (t *Token) parse(p *Parser) (string, error) {
 
 		value := arg
 
-		cmd += fmt.Sprintf("mov [%s], %s\n", var_ident, value)
+		cmd += fmt.Sprintf("mov word [%s], %s\n", var_ident, value)
 	default:
 		err = fmt.Errorf("invalid operation: %s", string(*t))
 	}
