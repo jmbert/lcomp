@@ -18,6 +18,8 @@ var functions []string
 
 var current_function *string
 
+var variables []string
+
 func get_arg(p *Parser) (Token, error) {
 	var err error
 	var arg Token
@@ -129,6 +131,14 @@ func (t *Token) parse(p *Parser) (string, error) {
 		functions = append(functions, s)
 		current_function = &functions[len(functions)-1]
 
+	case "declare":
+		arg, err := get_arg(p)
+		if err != nil {
+			break
+		}
+		var_ident := arg
+
+		variables = append(variables, string(var_ident))
 	default:
 		err = fmt.Errorf("invalid operation: %s", string(*t))
 	}

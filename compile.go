@@ -1,6 +1,7 @@
 package lcomp
 
 import (
+	"fmt"
 	"os"
 )
 
@@ -58,6 +59,14 @@ func Compile(file_name, out_name string) error {
 
 	for _, s := range functions {
 		_, err = out_file.Write([]byte(s))
+
+		if err != nil {
+			return err
+		}
+	}
+
+	for _, v := range variables {
+		_, err = out_file.Write([]byte(fmt.Sprintf("v resq 2")))
 
 		if err != nil {
 			return err
