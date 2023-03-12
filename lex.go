@@ -42,25 +42,6 @@ func Tokenise(file string) ([]Token, error) {
 		var eof bool
 		var token string
 
-		l.advance()
-
-		if l.current_char == '\\' {
-			l.advance()
-			if l.current_char == '\\' {
-				eof, err = l.scan_comment()
-			} else {
-				l.retreat()
-			}
-		}
-
-		if err != nil {
-			break
-		}
-
-		if eof {
-			break
-		}
-
 		if l.current_char == ' ' || l.current_char == '\n' || l.current_char == '\t' {
 			eof, err = l.scan_ws()
 		} else {
@@ -98,6 +79,10 @@ func (l *Lexer) read_word() (string, bool, error) {
 
 	l.advance()
 
+	if string(buffer) == "//" {
+		return "", eof, err
+	}
+
 	return string(buffer), eof, err
 }
 
@@ -127,4 +112,3 @@ func (l *Lexer) scan_comment() (bool, error) {
 	}
 
 	return eof, err
-}
