@@ -65,6 +65,12 @@ func Compile(file_name, out_name string) error {
 		}
 	}
 
+	_, err = out_file.Write([]byte("section .bss\n"))
+
+	if err != nil {
+		return err
+	}
+
 	for _, v := range variables {
 		_, err = out_file.Write([]byte(fmt.Sprintf("%s resq 2\n", v)))
 
