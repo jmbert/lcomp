@@ -130,7 +130,7 @@ func (t *Token) parse(p *Parser) (string, error) {
 		current_function = &functions[len(functions)-1]
 
 	default:
-		err = errors.New("invalid operation")
+		err = fmt.Errorf("invalid operation: %s", string(*t))
 	}
 
 	return cmd, err
