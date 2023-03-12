@@ -1,4 +1,4 @@
-package go_stack_compiler
+package lcomp
 
 import (
 	"os"

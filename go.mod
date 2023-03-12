@@ -1,3 +1,3 @@
-module github.com/jmbert/go_stack_compiler
+module lcomp
 
 go 1.18
