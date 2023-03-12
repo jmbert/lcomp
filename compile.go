@@ -66,7 +66,7 @@ func Compile(file_name, out_name string) error {
 	}
 
 	for _, v := range variables {
-		_, err = out_file.Write([]byte(fmt.Sprintf("v resq 2")))
+		_, err = out_file.Write([]byte(fmt.Sprintf("%s resq 2\n", v)))
 
 		if err != nil {
 			return err
