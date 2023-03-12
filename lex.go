@@ -24,6 +24,14 @@ func (l *Lexer) advance() bool {
 	return false
 }
 
+func (l *Lexer) retreat() {
+	if l.position > 0 {
+		l.position--
+	}
+
+	l.current_char = l.src[l.position]
+}
+
 func Tokenise(file string) ([]Token, error) {
 	l := new_lexer(file)
 
@@ -33,6 +41,15 @@ func Tokenise(file string) ([]Token, error) {
 
 		var eof bool
 		var token string
+
+		if l.current_char == '\\' {
+			l.advance()
+			if l.current_char == '\\' {
+				eof, err = l.scan_comment()
+			} else {
+				l.retreat()
+			}
+		}
 
 		if l.current_char == ' ' || l.current_char == '\n' || l.current_char == '\t' {
 			eof, err = l.scan_ws()
@@ -79,6 +96,20 @@ func (l *Lexer) scan_ws() (bool, error) {
 	var err error
 
 	for l.current_char == ' ' || l.current_char == '\n' || l.current_char == '\t' {
+		if l.advance() {
+			eof = true
+			break
+		}
+	}
+
+	return eof, err
+}
+
+func (l *Lexer) scan_comment() (bool, error) {
+	var eof bool
+	var err error
+
+	for l.current_char != '\n' {
 		if l.advance() {
 			eof = true
 			break
