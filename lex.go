@@ -51,6 +51,14 @@ func Tokenise(file string) ([]Token, error) {
 			}
 		}
 
+		if err != nil {
+			break
+		}
+
+		if eof {
+			break
+		}
+
 		if l.current_char == ' ' || l.current_char == '\n' || l.current_char == '\t' {
 			eof, err = l.scan_ws()
 		} else {
