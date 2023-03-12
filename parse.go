@@ -119,6 +119,7 @@ func (t *Token) parse(p *Parser) (string, error) {
 
 		cmd += fmt.Sprintf("mov ebx, %s\n", arg)
 		cmd += "int 0x80\n"
+
 	case "return":
 		arg, err := get_arg(p)
 		if err != nil {
@@ -134,6 +135,7 @@ func (t *Token) parse(p *Parser) (string, error) {
 		cmd += fmt.Sprintf("mov eax, %s\n", arg)
 		cmd += "ret\n"
 		cmd += "pop ebp\n"
+
 	case "define":
 		arg, err := get_arg(p)
 		if err != nil {
@@ -174,6 +176,35 @@ func (t *Token) parse(p *Parser) (string, error) {
 		value := arg
 
 		cmd += fmt.Sprintf("mov word [%s], %s\n", var_ident, value)
+
+	case "add":
+		arg, err := get_arg(p)
+		if err != nil {
+			break
+		}
+		for _, v := range variables {
+			if v == string(arg) {
+				arg = "[" + Token(v) + "]"
+			}
+		}
+		val1 := arg
+
+		arg, err = get_arg(p)
+		if err != nil {
+			break
+		}
+
+		for _, v := range variables {
+			if v == string(arg) {
+				arg = "[" + Token(v) + "]"
+			}
+		}
+		val2 := arg
+
+		cmd += fmt.Sprintf("mov eax, %s\n", val1)
+		cmd += fmt.Sprintf("add eax, %s\n", val2)
+		cmd += "push eax\n"
+
 	default:
 		err = fmt.Errorf("invalid operation: %s", string(*t))
 	}
