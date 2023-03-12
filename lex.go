@@ -46,7 +46,10 @@ func Tokenise(file string) ([]Token, error) {
 			eof, err = l.scan_ws()
 		} else {
 			token, eof, err = l.read_word()
-			l.tokens = append(l.tokens, Token(token))
+			if token != "" {
+				l.tokens = append(l.tokens, Token(token))
+			}
+
 		}
 
 		if err != nil {
@@ -80,6 +83,7 @@ func (l *Lexer) read_word() (string, bool, error) {
 	l.advance()
 
 	if string(buffer) == "//" {
+		l.scan_comment()
 		return "", eof, err
 	}
 
@@ -112,3 +116,4 @@ func (l *Lexer) scan_comment() (bool, error) {
 	}
 
 	return eof, err
+}
