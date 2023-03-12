@@ -18,7 +18,7 @@ func Compile(file_name, out_name string) error {
 		return err
 	}
 
-	buffer, err = os.ReadFile("build/source.txt")
+	buffer, err = os.ReadFile("/home/joe/lbuild/source.txt")
 
 	if err != nil {
 		return err
