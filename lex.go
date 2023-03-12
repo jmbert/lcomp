@@ -1,7 +1,5 @@
 package lcomp
 
-import "fmt"
-
 type Lexer struct {
 	src          string
 	position     int
@@ -44,9 +42,10 @@ func Tokenise(file string) ([]Token, error) {
 		var eof bool
 		var token string
 
+		l.advance()
+
 		if l.current_char == '\\' {
 			l.advance()
-			fmt.Println("HELLO")
 			if l.current_char == '\\' {
 				eof, err = l.scan_comment()
 			} else {
